@@ -1,0 +1,10 @@
+export declare type Props = {
+    filename: string;
+    mimeType: string;
+    filesize: number;
+    staticURL: string;
+    width?: number;
+    height?: number;
+    sizes?: unknown;
+    url?: string;
+};

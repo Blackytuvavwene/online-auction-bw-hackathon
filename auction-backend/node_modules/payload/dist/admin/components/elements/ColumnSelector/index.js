@@ -1,0 +1,28 @@
+import React, { useState } from 'react';
+import flattenTopLevelFields from '../../../../utilities/flattenTopLevelFields';
+import Pill from '../Pill';
+import Plus from '../../icons/Plus';
+import X from '../../icons/X';
+import './index.scss';
+const baseClass = 'column-selector';
+const ColumnSelector = (props) => {
+    const { collection, columns, setColumns, } = props;
+    const [fields] = useState(() => flattenTopLevelFields(collection.fields, true));
+    return (React.createElement("div", { className: baseClass }, fields && fields.map((field, i) => {
+        const isEnabled = columns.find((column) => column === field.name);
+        return (React.createElement(Pill, { onClick: () => {
+                let newState = [...columns];
+                if (isEnabled) {
+                    newState = newState.filter((remainingColumn) => remainingColumn !== field.name);
+                }
+                else {
+                    newState.unshift(field.name);
+                }
+                setColumns(newState);
+            }, alignIcon: "left", key: field.name || i, icon: isEnabled ? React.createElement(X, null) : React.createElement(Plus, null), className: [
+                `${baseClass}__column`,
+                isEnabled && `${baseClass}__column--active`,
+            ].filter(Boolean).join(' ') }, field.label || field.name));
+    })));
+};
+export default ColumnSelector;

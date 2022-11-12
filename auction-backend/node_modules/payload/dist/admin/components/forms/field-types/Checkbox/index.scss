@@ -1,0 +1,77 @@
+@import '../../../../scss/styles.scss';
+
+.checkbox {
+  position: relative;
+  margin-bottom: $baseline;
+
+  .tooltip {
+    right: auto;
+    position: relative;
+    margin-bottom: .2em;
+    max-width: fit-content;
+  }
+
+  &__error-wrap {
+    position: relative;
+  }
+
+  button {
+    @extend %btn-reset;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+
+    &:hover {
+      svg {
+        opacity: .2;
+      }
+    }
+  }
+
+  &__input {
+    @include formInput;
+    padding: 0;
+    line-height: 0;
+    position: relative;
+    width: $baseline;
+    height: $baseline;
+    margin-right: base(.5);
+
+    svg {
+      opacity: 0;
+    }
+  }
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+
+  &--checked {
+    button {
+      .checkbox__input {
+        svg {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &--read-only {
+
+    .checkbox__label {
+      color: var(--theme-elevation-400);
+    }
+
+    .checkbox__input {
+      background-color: var(--theme-elevation-100);
+    }
+  }
+}

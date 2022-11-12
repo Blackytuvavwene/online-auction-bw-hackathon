@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "auction_items",
+  "info": {
+    "singularName": "auction-item",
+    "pluralName": "auction-items",
+    "displayName": "AuctionItem",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "itemUID": {
+      "type": "uid"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "seller": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "auction_items"
+    },
+    "startingPrice": {
+      "type": "decimal"
+    },
+    "incrementalPrice": {
+      "type": "decimal"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Electronic",
+        "Land",
+        "Vehicle",
+        "Property",
+        "Furniture"
+      ]
+    },
+    "quantity": {
+      "type": "biginteger"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}

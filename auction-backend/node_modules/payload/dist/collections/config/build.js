@@ -1,0 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const buildCollection = (collection) => collection;
+exports.default = buildCollection;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYnVpbGQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvY29sbGVjdGlvbnMvY29uZmlnL2J1aWxkLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBRUEsTUFBTSxlQUFlLEdBQUcsQ0FBQyxVQUE0QixFQUFvQixFQUFFLENBQUMsVUFBVSxDQUFDO0FBRXZGLGtCQUFlLGVBQWUsQ0FBQyJ9

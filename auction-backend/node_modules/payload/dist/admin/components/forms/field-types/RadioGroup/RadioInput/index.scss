@@ -1,0 +1,89 @@
+@import '../../../../../scss/styles';
+
+.radio-input {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: base(.10) 0;
+
+  input[type=radio] {
+    display: none;
+  }
+
+  &__styled-radio {
+    @include formInput;
+    width: $baseline;
+    height: $baseline;
+    position: relative;
+    padding: 0;
+    display: inline-block;
+    border-radius: 50%;
+
+    &:before {
+      content: " ";
+      display: block;
+      border-radius: 100%;
+      background-color: var(--theme-elevation-800);
+      width: calc(100% - 10px);
+      height: calc(100% - 10px);
+      border: 5px solid var(--theme-elevation-0);
+      opacity: 0;
+    }
+  }
+
+  &__label {
+    margin-left: base(.5);
+  }
+
+  &--is-selected {
+    .radio-input {
+      &__styled-radio {
+        &:before {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &:not(&--is-selected) {
+    &:hover {
+      .radio-input {
+        &__styled-radio {
+
+          &:before {
+            opacity: .2;
+          }
+        }
+      }
+    }
+  }
+}
+
+.radio-group--read-only {
+  .radio-input {
+    cursor: default;
+
+    &__label {
+      color: var(--theme-elevation-800);
+    }
+
+    &--is-selected {
+      .radio-input__styled-radio {
+        &:before {
+          background-color: var(--theme-elevation-800);
+        }
+      }
+    }
+
+
+    &:not(.radio-input--is-selected) {
+      &:hover {
+        .radio-input__styled-radio {
+          &:before {
+            opacity: 0;
+          }
+        }
+      }
+    }
+  }
+}

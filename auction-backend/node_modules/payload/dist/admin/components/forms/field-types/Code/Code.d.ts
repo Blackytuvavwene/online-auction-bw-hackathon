@@ -1,0 +1,14 @@
+import React from 'react';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-jsx';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-tsx';
+import 'prismjs/components/prism-yaml';
+import { Props } from './types';
+import './index.scss';
+declare const _default: React.FC<Props>;
+export default _default;

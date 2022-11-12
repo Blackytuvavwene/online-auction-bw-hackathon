@@ -1,0 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getVersionsModelName = void 0;
+const getVersionsModelName = (entity) => `_${entity.slug}_versions`;
+exports.getVersionsModelName = getVersionsModelName;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZ2V0VmVyc2lvbnNNb2RlbE5hbWUuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvdmVyc2lvbnMvZ2V0VmVyc2lvbnNNb2RlbE5hbWUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBR08sTUFBTSxvQkFBb0IsR0FBRyxDQUFDLE1BQXlELEVBQVUsRUFBRSxDQUFDLElBQUksTUFBTSxDQUFDLElBQUksV0FBVyxDQUFDO0FBQXpILFFBQUEsb0JBQW9CLHdCQUFxRyJ9

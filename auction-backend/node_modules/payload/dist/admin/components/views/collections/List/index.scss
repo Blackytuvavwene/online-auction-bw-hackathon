@@ -1,0 +1,87 @@
+@import '../../../../scss/styles';
+
+.collection-list {
+  width: 100%;
+  margin-bottom: base(2);
+
+  &__wrap {
+    padding-top: $baseline;
+    padding-bottom: $baseline;
+  }
+
+  &__header {
+    margin-bottom: $baseline;
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+
+    h1 {
+      margin: 0 base(.75) 0 0;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .pill {
+      margin: base(.5) 0 base(.25);
+    }
+  }
+
+  &__sub-header {
+    flex-basis: 100%;
+    margin-top: base(.25);
+  }
+
+  .table {
+    table {
+      width: 100%;
+      overflow: auto;
+    }
+  }
+
+  &__page-controls {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .paginator {
+    margin-bottom: 0;
+  }
+
+  &__page-info {
+    margin-right: base(1);
+    margin-left: auto;
+  }
+
+  @include mid-break {
+    &__wrap {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    &__header {
+      .pill {
+        margin-bottom: base(.0625);
+      }
+    }
+
+    &__search-input {
+      margin: 0;
+    }
+
+    &__page-controls {
+      flex-wrap: wrap;
+    }
+
+    &__page-info {
+      margin-left: 0;
+    }
+
+    .paginator {
+      width: 100%;
+      margin-bottom: $baseline;
+    }
+  }
+}

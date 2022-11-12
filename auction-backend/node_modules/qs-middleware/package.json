@@ -1,0 +1,44 @@
+{
+  "name": "qs-middleware",
+  "version": "1.0.3",
+
+  "description": "Connect querystring middleware",
+  "keywords": [ "connect", "querystring" ],
+
+  "author": "Springer Nature",
+  "contributors": [
+    "Rowan Manning (http://rowanmanning.com/)",
+    "José Bolos (https://github.com/joseluisbolos)"
+  ],
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/springernature/qs-middleware.git"
+  },
+  "homepage": "https://github.com/springernature/qs-middleware",
+  "bugs": "https://github.com/springernature/qs-middleware/issues",
+  "license": "LGPL-3.0",
+
+  "engines": {
+    "node": ">=0.10"
+  },
+  "dependencies": {
+    "qs": "~6.4.0"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.0",
+    "mockery": "^2.0.0",
+    "proclaim": "^3.0.0",
+    "sinon": "^1.0.0",
+    "xo": "^0.17.1"
+  },
+
+  "main": "./lib/qs-middleware.js",
+  "scripts": {
+    "test": "make ci"
+  },
+  "xo": {
+    "envs": ["mocha"]
+  }
+}

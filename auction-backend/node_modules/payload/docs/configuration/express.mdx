@@ -1,0 +1,47 @@
+---
+title: Express
+label: Express
+order: 60
+desc: Payload utilizes Express middleware packages, you can customize how they work by passing in configuration options.
+keywords: config, configuration, documentation, Content Management System, cms, headless, javascript, node, react, express
+---
+
+Payload utilizes a few Express-specific middleware packages within its own routers. You can customize how they work by passing in configuration options to the main Payload config's `express` property.
+
+### JSON
+
+`express.json()` is used to parse JSON body content into JavaScript objects accessible on the Express `req`. Payload allows you to customize all of the `json` method's options. Common examples of customization use-cases are increasing the max allowed JSON body size which defaults to `2MB`.
+
+**Example payload.config.js for how to increase the max JSON size allowed to be sent to Payload endpoints:**
+
+```js
+{
+	express: {
+		json: {
+			limit: '4mb',
+		}
+	}
+}
+```
+
+You can find a list of all available options that are able to be passed to `express.json()` [here](https://expressjs.com/en/api.html).
+
+### Compression
+
+Payload uses the `compression` package to optimize transfer size for all of the routes it opens, and you can pass customization options through the Payload config.
+
+To customize compression options, pass an object to the Payload config's `express` property.
+
+**Example payload.config.js:**
+
+```js
+{
+	express: {
+		compression: {
+			// settings go here
+		}
+	}
+}
+```
+
+Typically, the default options for this package are suitable. However, for a list of all available customization options, [click here](http://expressjs.com/en/resources/middleware/compression.html).

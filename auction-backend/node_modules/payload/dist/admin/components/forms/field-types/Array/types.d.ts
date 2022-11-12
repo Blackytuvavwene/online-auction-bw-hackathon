@@ -1,0 +1,9 @@
+import { ArrayField } from '../../../../../fields/config/types';
+import { FieldTypes } from '..';
+import { FieldPermissions } from '../../../../../auth/types';
+export declare type Props = Omit<ArrayField, 'type'> & {
+    path?: string;
+    fieldTypes: FieldTypes;
+    permissions: FieldPermissions;
+    label: string | false;
+};

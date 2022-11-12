@@ -1,0 +1,69 @@
+---
+title: Adding your own Queries and Mutations
+label: Custom Queries and Mutations
+order: 20
+desc: Payload allows you to add your own GraphQL queries and mutations, simply set up GraphQL in your main Payload config by following these instructions.
+keywords: graphql, resolvers, mutations, custom, queries, config, configuration, documentation, Content Management System, cms, headless, javascript, node, react, express
+---
+
+You can add your own GraphQL queries and mutations to Payload, making use of all the types that Payload has defined for you.
+
+To do so, add your queries and mutations to the main Payload config as follows:
+
+| Config Path          | Description  |
+| -------------------- | -------------|
+| `graphQL.queries`    | Function that returns an object containing keys to custom GraphQL queries |
+| `graphQL.mutations`  | Function that returns an object containing keys to custom GraphQL mutations |
+
+The above properties each receive a function that is defined with the following arguments:
+
+**`GraphQL`**
+
+This is Payload's GraphQL dependency. You should not install your own copy of GraphQL as a dependency due to underlying restrictions based on how GraphQL works. Instead, you can use the Payload-provided copy via this argument.
+
+**`payload`**
+
+This is a copy of the currently running Payload instance, which provides you with existing GraphQL types for all of your Collections and Globals - among other things.
+
+##### Return value
+
+Both `graphQL.queries` and `graphQL.mutations` functions should return an object with properties equal to your newly written GraphQL queries and mutations.
+
+### Example
+
+`payload.config.js`:
+
+```ts
+import { buildConfig } from 'payload/config';
+import myCustomQueryResolver from './graphQL/resolvers/myCustomQueryResolver';
+
+export default buildConfig({
+  graphQL: {
+    // highlight-start
+    queries: (GraphQL, payload) => {
+      return {
+        MyCustomQuery: {
+          type: new GraphQL.GraphQLObjectType({
+            name: 'MyCustomQuery',
+            fields: {
+              text: {
+                type: GraphQL.GraphQLString,
+              },
+              someNumberField: {
+                type: GraphQL.GraphQLFloat,
+              },
+            },
+            args: {
+              argNameHere: {
+                type: new GraphQL.GraphQLNonNull(GraphQLString),
+              }
+            },
+            resolve: myCustomQueryResolver,
+          })
+        }
+      }
+    }
+    // highlight-end
+  }
+})
+```

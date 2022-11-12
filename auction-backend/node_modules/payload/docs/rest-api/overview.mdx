@@ -1,0 +1,124 @@
+---
+title: REST API
+label: Overview
+order: 10
+desc: Payload generates a fully functional REST API from your Collection and Global configs.
+keywords: rest, api, documentation, Content Management System, cms, headless, javascript, node, react, express
+---
+
+<Banner>
+  A fully functional REST API is automatically generated from your Collection and Global configs.
+</Banner>
+
+All Payload API routes are mounted prefixed to your config's `routes.api` URL segment (default: `/api`).
+
+**REST query parameters:**
+
+- [depth](/docs/getting-started/concepts#depth) - automatically populates relationships and uploads
+- [locale](/docs/configuration/localization#retrieving-localized-docs) - retrieves document(s) in a specific locale
+- [fallback-locale](/docs/configuration/localization#retrieving-localized-docs) - specifies a fallback locale if no locale value exists
+
+## Collections
+
+Each collection is mounted using its `slug` value. For example, if a collection's slug is `users`, all corresponding routes will be mounted on `/api/users`.
+
+Note: Collection slugs must be formatted in kebab-case
+
+**All CRUD operations are exposed as follows:**
+
+| Method   | Path                        | Description                            |
+| -------- | --------------------------- | -------------------------------------- |
+| `GET`    | `/api/{collection-slug}`     | Find paginated documents               |
+| `GET`    | `/api/{collection-slug}/:id` | Find a specific document by ID         |
+| `POST`   | `/api/{collection-slug}`     | Create a new document                  |
+| `PATCH`  | `/api/{collection-slug}/:id` | Update a document by ID                |
+| `DELETE` | `/api/{collection-slug}/:id` | Delete an existing document by ID      |
+
+##### Additional `find` query parameters
+
+The `find` endpoint supports the following additional query parameters:
+
+- [sort](/docs/queries/overview#sort) - sort by field
+- [where](/docs/queries/overview) - pass a `where` query to constrain returned documents
+- [limit](/docs/queries/pagination#pagination-controls) - limit the returned documents to a certain number
+- [page](/docs/queries/pagination#pagination-controls) - get a specific page of documents
+
+## Auth Operations
+
+Auth enabled collections are also given the following endpoints:
+
+| Method   | Path                        | Description |
+| -------- | --------------------------- | ----------- |
+| `POST`   | `/api/{collection-slug}/verify/:token`   | [Email verification](/docs/authentication/operations#verify-by-email), if enabled. |
+| `POST`   | `/api/{collection-slug}/unlock`          | [Unlock a user's account](/docs/authentication/operations#unlock), if enabled. |
+| `POST`   | `/api/{collection-slug}/login`           | [Logs in](/docs/authentication/operations#login) a user with email / password. |
+| `POST`   | `/api/{collection-slug}/logout`          | [Logs out](/docs/authentication/operations#logout) a user. |
+| `POST`   | `/api/{collection-slug}/refresh-token`   | [Refreshes a token](/docs/authentication/operations#refresh) that has not yet expired. |
+| `GET`    | `/api/{collection-slug}/me`              | [Returns the currently logged in user with token](/docs/authentication/operations#me). |
+| `POST`   | `/api/{collection-slug}/forgot-password` | [Password reset workflow](/docs/authentication/operations#forgot-password) entry point. |
+| `POST`   | `/api/{collection-slug}/reset-password`  | [To reset the user's password](/docs/authentication/operations#reset-password). |
+
+## Globals
+
+Globals cannot be created or deleted, so there are only two REST endpoints opened:
+
+| Method   | Path                        | Description             |
+| -------- | --------------------------- | ----------------------- |
+| `GET`    | `/api/globals/{globalSlug}` | Get a global by slug    |
+| `POST`   | `/api/globals/{globalSlug}` | Update a global by slug |
+
+## Preferences
+
+In addition to the dynamically generated endpoints above Payload also has REST endpoints to manage the admin user [preferences](/docs/admin/overview#preferences) for data specific to the authenticated user.
+
+| Method   | Path                        | Description             |
+| -------- | --------------------------- | ----------------------- |
+| `GET`    | `/api/_preferences/{key}` | Get a preference by key   |
+| `POST`   | `/api/_preferences/{key}` | Create or update by key   |
+| `DELETE` | `/api/_preferences/{key}` | Delete a user preference by key |
+
+## Custom Endpoints
+
+Additional REST API endpoints can be added to your application by providing an array of `endpoints` in various places within a Payload config. Custom endpoints are useful for adding additional middleware on existing routes or for building custom functionality into Payload apps and plugins. Endpoints can be added at the top of the Payload config, `collections`, and `globals` and accessed respective of the api and slugs you have configured.
+
+Each endpoint object needs to have:
+
+| Property   | Description                               |
+| ---------- | ----------------------------------------- |
+| **`path`**     | A string for the endpoint route after the collection or globals slug |
+| **`method`**   | The lowercase HTTP verb to use: 'get', 'head', 'post', 'put', 'delete', 'connect' or 'options' |
+| **`handler`**  | A function or array of functions to be called with **req**, **res** and **next** arguments. [Express](https://expressjs.com/en/guide/routing.html#route-handlers) |
+| **`root`**     | When `true`, defines the endpoint on the root Express app, bypassing Payload handlers and the `routes.api` subpath. Note: this only applies to top-level endpoints of your Payload config, endpoints defined on `collections` or `globals` cannot be root. |
+
+Example:
+
+```ts
+import { CollectionConfig } from 'payload/types';
+
+// a collection of 'orders' with an additional route for tracking details, reachable at /api/orders/:id/tracking
+const Orders: CollectionConfig = {
+	slug: 'orders',
+	fields: [ /* ... */ ],
+  // highlight-start
+  endpoints: [
+    {
+      path: '/:id/tracking',
+      method: 'get',
+      handler: async (req, res, next) => {
+        const tracking = await getTrackingInfo(req.params.id);
+        if (tracking) {
+          res.status(200).send({ tracking });
+        } else {
+          res.status(404).send({ error: 'not found' });
+        }
+      }
+    }
+  ],
+  // highlight-end
+}
+```
+
+<Banner>
+  <strong>Note:</strong><br/>
+  **req** will have the **payload** object and can be used inside your endpoint handlers for making calls like req.payload.find() that will make use of access control and hooks.
+</Banner>
